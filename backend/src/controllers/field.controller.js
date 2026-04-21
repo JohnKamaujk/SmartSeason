@@ -1,4 +1,5 @@
 const prisma = require("../config/prisma");
+const { getFieldStatus } = require("../services/status.service");
 
 exports.createField = async (req, res) => {
   try {
@@ -26,15 +27,33 @@ exports.getFields = async (req, res) => {
 
     if (req.user.role === "ADMIN") {
       fields = await prisma.field.findMany({
-        include: { assignedAgent: true },
+        include: {
+          assignedAgent: true,
+          updates: {
+            orderBy: { createdAt: "desc" },
+            take: 1, // only latest update
+          },
+        },
       });
     } else {
       fields = await prisma.field.findMany({
         where: { assignedAgentId: req.user.id },
+        include: {
+          updates: {
+            orderBy: { createdAt: "desc" },
+            take: 1,
+          },
+        },
       });
     }
 
-    res.json(fields);
+    // 🔥 Attach computed status
+    const fieldsWithStatus = fields.map((field) => ({
+      ...field,
+      status: getFieldStatus(field),
+    }));
+
+    res.json(fieldsWithStatus);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
