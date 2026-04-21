@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  AGENT
+}
+
+enum FieldStage {
+  PLANTED
+  GROWING
+  READY
+  HARVESTED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+  fields    Field[]  @relation("AgentFields")
+  updates   FieldUpdate[]
+  createdAt DateTime @default(now())
+}
+
+model Field {
+  id              String        @id @default(uuid())
+  name            String
+  cropType        String
+  plantingDate    DateTime
+  currentStage    FieldStage
+  assignedAgent   User?         @relation("AgentFields", fields: [assignedAgentId], references: [id])
+  assignedAgentId String?
+  updates         FieldUpdate[]
+  createdAt       DateTime      @default(now())
+}
+
+model FieldUpdate {
+  id        String     @id @default(uuid())
+  field     Field      @relation(fields: [fieldId], references: [id])
+  fieldId   String
+  agent     User       @relation(fields: [agentId], references: [id])
+  agentId   String
+  stage     FieldStage?
+  notes     String?
+  createdAt DateTime   @default(now())
+}
