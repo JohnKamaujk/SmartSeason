@@ -17,7 +17,20 @@ exports.register = async (req, res) => {
       },
     });
 
-    res.status(201).json(user);
+    // remove password safely
+    const { password: _, ...safeUser } = user;
+
+    // generate token (IMPORTANT FIX)
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" },
+    );
+
+    res.status(201).json({
+      token,
+      user: safeUser,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -47,7 +60,12 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" },
     );
 
-    res.json({ token, user });
+    const { password: _, ...safeUser } = user;
+
+    res.json({
+      token,
+      user: safeUser,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
