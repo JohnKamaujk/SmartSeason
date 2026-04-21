@@ -6,8 +6,21 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists with this email",
+      });
+    }
+
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Create user
     const user = await prisma.user.create({
       data: {
         name,
@@ -17,22 +30,22 @@ exports.register = async (req, res) => {
       },
     });
 
-    // remove password safely
+    // Remove password from response
     const { password: _, ...safeUser } = user;
 
-    // generate token (IMPORTANT FIX)
+    // Generate token
     const token = jwt.sign(
       { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1d" },
     );
 
-    res.status(201).json({
+    return res.status(201).json({
       token,
       user: safeUser,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
