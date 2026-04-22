@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import CreateField from "../components/CreateField";
+import FieldList from "../components/FieldList";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -19,19 +20,23 @@ export default function Dashboard() {
 
   return (
     <div style={{ padding: 40 }}>
-      <h2>Dashboard</h2>
+      <h2>{user.role} Dashboard</h2>
 
       <p>Total Fields: {data.totalFields}</p>
 
       <h3>Status Breakdown</h3>
-      <pre>{JSON.stringify(data.statusBreakdown, null, 2)}</pre>
+      <ul>
+        <li>Active: {data.statusBreakdown.ACTIVE}</li>
+        <li>At Risk: {data.statusBreakdown.AT_RISK}</li>
+        <li>Completed: {data.statusBreakdown.COMPLETED}</li>
+      </ul>
 
-      <h3>Recent Updates</h3>
-      <pre>{JSON.stringify(data.recentUpdates, null, 2)}</pre>
-
-      {user?.role === "ADMIN" && (
+      {/* Admin only */}
+      {user.role === "ADMIN" && (
         <CreateField onCreated={() => window.location.reload()} />
       )}
+
+      <FieldList />
     </div>
   );
 }
