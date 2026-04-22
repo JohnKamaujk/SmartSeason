@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import CreateField from "../components/CreateField";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -26,6 +28,10 @@ export default function Dashboard() {
 
       <h3>Recent Updates</h3>
       <pre>{JSON.stringify(data.recentUpdates, null, 2)}</pre>
+
+      {user?.role === "ADMIN" && (
+        <CreateField onCreated={() => window.location.reload()} />
+      )}
     </div>
   );
 }
