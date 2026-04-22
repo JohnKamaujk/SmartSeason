@@ -60,6 +60,18 @@ export default function UpdateField({ field, user, onUpdated }) {
       <p>
         <b>Stage:</b> {field.currentStage}
       </p>
+      {/* 📝 Latest Observation */}
+      {field.updates && field.updates.length > 0 && (
+        <div style={styles.latestUpdate}>
+          <p style={styles.latestTitle}>Latest Observation</p>
+
+          <p style={{ margin: 0 }}>{field.updates[0].notes}</p>
+
+          <small style={{ color: "#666" }}>
+            {new Date(field.updates[0].createdAt).toLocaleString()}
+          </small>
+        </div>
+      )}
 
       {/* ACTION */}
       {canUpdate && (
@@ -169,5 +181,19 @@ const styles = {
     color: "#fff",
     fontWeight: "bold",
     cursor: "pointer",
+  },
+  latestUpdate: {
+    marginTop: 10,
+    padding: 10,
+    background: "#f5f5f5",
+    borderRadius: 10,
+    borderLeft: "4px solid #2E7D32",
+  },
+
+  latestTitle: {
+    margin: "0 0 5px 0",
+    fontWeight: "bold",
+    fontSize: 13,
+    color: "#2E7D32",
   },
 };
