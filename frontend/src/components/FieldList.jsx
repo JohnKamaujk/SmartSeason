@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import UpdateField from "./UpdateField";
 
 export default function FieldList() {
   const [fields, setFields] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     fetchFields();
@@ -23,29 +25,14 @@ export default function FieldList() {
     <div>
       <h3>Fields</h3>
 
-      <table border="1" cellPadding="10">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Crop</th>
-            <th>Stage</th>
-            <th>Status</th>
-            <th>Agent</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {fields.map((field) => (
-            <tr key={field.id}>
-              <td>{field.name}</td>
-              <td>{field.cropType}</td>
-              <td>{field.currentStage}</td>
-              <td>{field.status}</td>
-              <td>{field.assignedAgent?.name || "—"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {fields.map((field) => (
+        <UpdateField
+          key={field.id}
+          field={field}
+          user={user}
+          onUpdated={fetchFields}
+        />
+      ))}
     </div>
   );
 }
