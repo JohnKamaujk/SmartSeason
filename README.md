@@ -5,8 +5,8 @@
 ---
 
 ## 🔗 Live Demo (Optional)
-- Frontend: _Coming soon_
-- Backend API: _Coming soon_
+- Frontend: [_Coming soon_](https://smart-season-five.vercel.app/)
+- Backend API: [_Coming soon_](https://smartseason-3gg6.onrender.com)
 
 ---
 
