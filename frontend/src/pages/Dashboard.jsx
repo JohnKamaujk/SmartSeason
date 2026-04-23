@@ -8,13 +8,13 @@ export default function Dashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    const fetchDashboard = async () => {
-      const res = await api.get("/dashboard");
-      setData(res.data);
-    };
-
     fetchDashboard();
   }, []);
+
+  const fetchDashboard = async () => {
+    const res = await api.get("/dashboard");
+    setData(res.data);
+  };
 
   const handleLogout = () => {
     localStorage.clear();
@@ -72,7 +72,7 @@ export default function Dashboard() {
       {user.role === "ADMIN" && (
         <div style={styles.section}>
           <h3>Create New Field</h3>
-          <CreateField onCreated={() => window.location.reload()} />
+          <CreateField onCreated={fetchDashboard} />
         </div>
       )}
 
