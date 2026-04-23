@@ -12,12 +12,30 @@
 
 ## 📸 Screenshots
 
-> _(Add screenshots here after running the app)_
+### 🏠 Home Page
+![Home](./screenshots/home.png)
 
-- Home Page  
-- Dashboard (Admin)  
-- Field Management  
-- Field Updates  
+---
+
+### 📊 Dashboard (Admin)
+![Dashboard](./screenshots/craetefield.png)
+
+---
+
+### 🌾 Field Management
+![Fields](./screenshots/fieldmanagement.png)
+
+---
+
+### 🔄 login.png 
+![Updates](./screenshots/login.png)
+
+---
+
+---
+
+### 🔄 register 
+![Updates](./screenshots/register.png)
 
 ---
 
