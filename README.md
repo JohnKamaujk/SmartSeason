@@ -270,7 +270,7 @@ password: 123456
 ### Agent
 
 ```
-email: mary@@gmail.com
+email: mary@gmail.com
 password: 123456
 ```
 
