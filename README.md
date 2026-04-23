@@ -263,15 +263,15 @@ http://localhost:5173
 ### Admin
 
 ```
-email: admin@test.com
-password: admin123
+email: johnjkkamau@gmail.com
+password: 123456
 ```
 
 ### Agent
 
 ```
-email: agent@test.com
-password: agent123
+email: mary@@gmail.com
+password: 123456
 ```
 
 ---
