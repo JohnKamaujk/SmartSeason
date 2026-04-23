@@ -1,30 +1,9 @@
-import { useEffect, useState } from "react";
-import api from "../api/axios";
 import UpdateField from "./UpdateField";
 
-export default function FieldList() {
-  const [fields, setFields] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function FieldList({ fields, onUpdated }) {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  useEffect(() => {
-    fetchFields();
-  }, []);
-
-  const fetchFields = async () => {
-    try {
-      setLoading(true);
-      const res = await api.get("/fields");
-      setFields(res.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) return <p>Loading fields...</p>;
+  if (!fields) return <p>Loading fields...</p>;
   if (!fields.length) return <p>No fields found</p>;
 
   return (
@@ -37,7 +16,7 @@ export default function FieldList() {
             key={field.id}
             field={field}
             user={user}
-            onUpdated={fetchFields}
+            onUpdated={onUpdated}
           />
         ))}
       </div>

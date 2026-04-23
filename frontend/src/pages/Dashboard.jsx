@@ -5,10 +5,17 @@ import FieldList from "../components/FieldList";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
+  const [fields, setFields] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const fetchFields = async () => {
+    const res = await api.get("/fields");
+    setFields(res.data);
+  };
 
   useEffect(() => {
     fetchDashboard();
+    fetchFields();
   }, []);
 
   const fetchDashboard = async () => {
@@ -72,14 +79,19 @@ export default function Dashboard() {
       {user.role === "ADMIN" && (
         <div style={styles.section}>
           <h3>Create New Field</h3>
-          <CreateField onCreated={fetchDashboard} />
+          <CreateField
+            onCreated={() => {
+              fetchDashboard();
+              fetchFields();
+            }}
+          />
         </div>
       )}
 
       {/* FIELD LIST */}
       <div style={styles.section}>
         <h3>Field Monitoring</h3>
-        <FieldList />
+        <FieldList fields={fields} onUpdated={fetchFields} />
       </div>
     </div>
   );
