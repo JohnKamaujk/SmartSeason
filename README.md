@@ -318,8 +318,3 @@ This project demonstrates:
 * real-world problem solving
 
 ```
-
----
-
-
-```
