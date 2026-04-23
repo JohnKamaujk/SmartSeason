@@ -218,6 +218,12 @@ cd ../frontend
 npm install
 ```
 
+### Create `.env`
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
 ---
 
 ### Start Frontend
