@@ -1,6 +1,4 @@
----
-
-# 🌱 SmartSeason — Field Monitoring System
+## 🌱 SmartSeason — Field Monitoring System
 
 > A full-stack application for tracking crop progress, managing agricultural fields, and coordinating field agents.
 
