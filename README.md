@@ -18,7 +18,7 @@
 ---
 
 ### 📊 Dashboard (Admin)
-![Dashboard](./screenshots/craetefield.png)
+![Dashboard](./screenshots/createfield.png)
 
 ---
 
